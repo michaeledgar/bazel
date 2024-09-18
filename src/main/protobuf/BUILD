@@ -7,7 +7,6 @@ load("//tools/build_rules:utilities.bzl", "java_library_srcs")
 package(default_visibility = ["//visibility:public"])
 
 FILES = [
-    "action_cache",
     "android_deploy_info",
     "bazel_flags",
     "build",
@@ -17,7 +16,6 @@ FILES = [
     "desugar_deps",
     "execution_statistics",
     "extra_actions_base",
-    "invocation_policy",
     "java_compilation",
     "memory_pressure",
     "test_status",
@@ -39,6 +37,26 @@ FILES = [
     name = s + "_java_proto_srcs",
     deps = [":" + s + "_java_proto"],
 ) for s in FILES]
+
+java_proto_library(
+    name = "action_cache_java_proto",
+    deps = ["@build_event_stream//src/main/protobuf:action_cache_proto"],
+)
+
+java_library_srcs(
+    name = "action_cache_java_proto_srcs",
+    deps = [":action_cache_java_proto"],
+)
+
+java_proto_library(
+    name = "invocation_policy_java_proto",
+    deps = ["@build_event_stream//src/main/protobuf:invocation_policy_proto"],
+)
+
+java_library_srcs(
+    name = "invocation_policy_java_proto_srcs",
+    deps = [":invocation_policy_java_proto"],
+)
 
 proto_library(
     name = "analysis_v2_proto",
@@ -75,7 +93,7 @@ proto_library(
     name = "command_server_proto",
     srcs = ["command_server.proto"],
     deps = [
-        ":failure_details_proto",
+        "@build_event_stream//src/main/protobuf:failure_details_proto",
         "@com_google_protobuf//:any_proto",
     ],
 )
@@ -90,15 +108,9 @@ java_library_srcs(
     deps = [":command_server_java_proto"],
 )
 
-proto_library(
-    name = "failure_details_proto",
-    srcs = ["failure_details.proto"],
-    deps = ["@com_google_protobuf//:descriptor_proto"],
-)
-
 java_proto_library(
     name = "failure_details_java_proto",
-    deps = [":failure_details_proto"],
+    deps = ["@build_event_stream//src/main/protobuf:failure_details_proto"],
 )
 
 java_library_srcs(
@@ -106,14 +118,9 @@ java_library_srcs(
     deps = [":failure_details_java_proto"],
 )
 
-proto_library(
-    name = "option_filters_proto",
-    srcs = ["option_filters.proto"],
-)
-
 java_proto_library(
     name = "option_filters_java_proto",
-    deps = [":option_filters_proto"],
+    deps = ["@build_event_stream//src/main/protobuf:option_filters_proto"],
 )
 
 java_library_srcs(
@@ -121,15 +128,9 @@ java_library_srcs(
     deps = [":option_filters_java_proto"],
 )
 
-proto_library(
-    name = "command_line_proto",
-    srcs = ["command_line.proto"],
-    deps = [":option_filters_proto"],
-)
-
 java_proto_library(
     name = "command_line_java_proto",
-    deps = [":command_line_proto"],
+    deps = ["@build_event_stream//src/main/protobuf:command_line_proto"],
 )
 
 java_library_srcs(

@@ -55,18 +55,10 @@ java_library_srcs(
     deps = [":package_metrics_java_proto"],
 )
 
-proto_library(
-    name = "package_load_metrics_proto",
-    srcs = ["package_load_metrics.proto"],
-    deps = [
-        "@com_google_protobuf//:duration_proto",
-    ],
-)
-
 java_proto_library(
     name = "package_load_metrics_java_proto",
     deps = [
-        ":package_load_metrics_proto",
+        "@build_event_stream//src/main/protobuf:package_load_metrics_proto",
     ],
 )
 

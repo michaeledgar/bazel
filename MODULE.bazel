@@ -36,6 +36,7 @@ bazel_dep(name = "with_cfg.bzl", version = "0.2.4")
 # TODO(pcloudy): Add remoteapis and googleapis as Bazel modules in the BCR.
 bazel_dep(name = "remoteapis", version = "")
 bazel_dep(name = "googleapis", version = "")
+bazel_dep(name = "build_event_stream", version = "")
 
 single_version_override(
     module_name = "rules_jvm_external",
@@ -51,6 +52,11 @@ local_path_override(
 local_path_override(
     module_name = "googleapis",
     path = "./third_party/googleapis",
+)
+
+local_path_override(
+    module_name = "build_event_stream",
+    path = "/Users/adgar/bazel-git/build-event-stream/proto",
 )
 
 single_version_override(
